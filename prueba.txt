@@ -33,3 +33,7 @@ else
 			n_code--
 	return receiveAns(n_code)
 }
+
+write(var1)
+read(var1)
+write(5)

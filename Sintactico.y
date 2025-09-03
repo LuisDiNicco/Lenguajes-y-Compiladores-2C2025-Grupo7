@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include "y.tab.h"
 int yystopparser=0;
-FILE  *yyin;
+
+extern FILE  *yyin;
 
 int yyerror();
 int yylex();
@@ -99,7 +100,20 @@ sentencia:
     | bucle {printf(" FIN WHILE\n");}
     | llamada_func {printf(" FIN LLAMADA_FUNC\n");}
     | retornar {printf(" FIN RETORNAR\n");}
+    | entrada_salida {printf(" FIN RETORNAR\n");}
     ;
+
+entrada_salida: 
+    WRITE PAR_ABR elemento PAR_CIE {printf("    WRITE (elem)  es entrada_salida\n");}
+    |  READ PAR_ABR ID PAR_CIE {printf("    READ(ID) es entrada_salida\n");}
+	;
+
+elemento: 
+    ID {printf("    ID es elemento\n");}
+    | CTE_INT {printf("    CTE_INT es elemento\n");}
+    | CTE_REAL_POS {printf("    CTE_INT es elemento\n");}
+    | CTE_STRING {printf("    CTE_INT es elemento\n");}
+	;
 
 asignacion: 
     ID OP_ASIG expresion {printf("    ID := Expresion_Aritmetica es Asignacion\n");}
@@ -150,7 +164,7 @@ termino:
     factor {printf("    Factor es Termino\n");}
     | termino OP_MUL factor {printf("     Termino*Factor es Termino\n");}
     | termino OP_DIV factor {printf("     Termino/Factor es Termino\n");}
-    | termino OP_MOD factor {printf("     Termino%Factor es Termino\n");}
+    | termino OP_MOD factor {printf("     Termino%sFactor es Termino\n","%");}
     ;
 
 factor: 

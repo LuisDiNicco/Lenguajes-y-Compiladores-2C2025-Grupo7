@@ -17,7 +17,7 @@
 
 /* Variables Globales */
 FILE  *yyin;
-int yylval;
+extern int yylval;
 char *yyltext; 
 
 int yyerror(void);
@@ -157,7 +157,6 @@ ID			        {LETRA}({LETRA}|{DIGITO}|{UNDERSCORE})*
 {COR_CIE}           {printf("\nCorchete Cierra: %s\n", yytext);return COR_CIE;}
 {LLA_ABR}           {printf("\nLLave abre: %s\n", yytext);return LLA_ABR;}
 {LLA_CIE}           {printf("\nLLave cierra: %s\n", yytext);return LLA_CIE;}
-{OP_NOT}		    {printf("\nOperador Not: %s\n", yytext);return OP_NOT;}
 {CMP_MAYOR}			{printf("\nComparador: %s\n", yytext);return CMP_MAYOR;}
 {CMP_MENOR}			{printf("\nComparador: %s\n", yytext);return CMP_MENOR;}
 {CMP_MAYOR_IGUAL}	{printf("\nComparador: %s\n", yytext);return CMP_MAYOR_IGUAL;}

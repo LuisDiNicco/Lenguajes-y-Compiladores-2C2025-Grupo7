@@ -127,7 +127,7 @@ INIT                    "init"
 FN_EQUALEXPRESSIONS     "equalExpressions"
 FN_ISZERO               "isZero"
 
-RET                 "return"
+RET                     "return"
 
 /* Regex: COMENTARIO*/
 COMMENT                 "#+".*"+#"
@@ -162,7 +162,7 @@ ID			            {LETRA}({LETRA}|{DIGITO}|{UNDERSCORE})*
 {OP_AND}		        {printf("\nOperador: %s\n", yytext);return OP_AND;}
 {OP_OR}		            {printf("\nOperador: %s\n", yytext);return OP_OR;}
 {OP_NOT}		        {printf("\nOperador: %s\n", yytext);return OP_NOT;}
-{ID}			        {printf("\nIdentificador: %s\n", yytext); agregarATabla(&tabla, yytext, "CTE_STRING"); return ID;}
+{ID}			        {printf("\nIdentificador: %s\n", yytext); agregarATabla(&tabla, yytext, "ID"); return ID;}
 {OP_SUM}		        {printf("\nSuma: %s\n", yytext);return OP_SUM;}
 {OP_ASIG}			    {printf("\nAsignacion: %s\n", yytext);return OP_ASIG;}
 {OP_MUL}		        {printf("\nMultiplicacion: %s\n", yytext);return OP_MUL;}
@@ -184,20 +184,19 @@ ID			            {LETRA}({LETRA}|{DIGITO}|{UNDERSCORE})*
 {COMMENT}		        {printf("\nComentario ignorado: %s\n", yytext);}
 {COMA}		            {printf("\nComa: %s\n", yytext);return COMA;}
 {DOS_PUNTOS}            {printf("\nDos puntos: %s\n", yytext);return DOS_PUNTOS;}
-{OP_UN_INC}		    {printf("\nIncremento Unario: %s\n", yytext);return OP_UN_INC;}
-{OP_UN_DEC}		    {printf("\nDecremento Unario: %s\n", yytext);return OP_UN_DEC;}
+{OP_UN_INC}		        {printf("\nIncremento Unario: %s\n", yytext);return OP_UN_INC;}
+{OP_UN_DEC}		        {printf("\nDecremento Unario: %s\n", yytext);return OP_UN_DEC;}
 
 {CTE_INT}               { return validar_entero(yytext); }
 {CTE_REAL}              { return validar_real(yytext); }
 {CTE_STRING}            { return validar_string(yytext); }
 
-"\n"      		
-"\t"            
-"\n\t"          
-" "             		
-"\r\n"     
+"\n"
+"\t"
+"\n\t"
+" "
+"\r\n"
 .			            { printf( "ERROR LEXICO : Caracter no reconocido: %s\n", yytext ); exit (0);}
-
 %%
 
 /*---------------------------------------------*/
@@ -212,6 +211,9 @@ int validar_entero(const char* lexema) {
         fprintf(stderr, "ERROR: Constante entera fuera de rango (maximo 16 bits): %s\n", lexema);
         exit(1);
     }
+
+    printf("\nConstante entera: %s\n", lexema);
+    agregarATabla(&tabla, lexema, "CTE_INT");
     
     return CTE_INT;
 }

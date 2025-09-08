@@ -6,6 +6,11 @@ init {
 	D : Boolean
 }
 #+D := regIniSAT1(p2, p3, ar0, a)+#
+a1 := 3.5
+p1 := "hola"
+p2 := "chau"
+D  := true
+ar0 := 1
 c:=d*(e-21)/4+j
 while(h<20)
 #+ Este es un comentario que se tiene que ignorar +#

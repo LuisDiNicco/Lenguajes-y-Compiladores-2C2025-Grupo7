@@ -170,8 +170,9 @@ termino:
 factor: 
     ID {printf("    ID es Factor \n");}
     | CTE_INT {printf("    CTE_INT es Factor\n");}
+    | CTE_REAL {printf("    CTE_REAL es Factor\n");}
     | PAR_ABR expresion PAR_CIE {printf("    Expresion entre parentesis es Factor\n");}
-    | CTE_STRING {printf("    CTE_INT es elemento\n");}
+    | CTE_STRING {printf("    CTE_STRING es Factor\n");}
     
     | llamada_func {printf("    Llamada_Func es Factor\n");}
     ;

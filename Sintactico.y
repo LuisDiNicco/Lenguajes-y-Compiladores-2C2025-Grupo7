@@ -1,6 +1,3 @@
-// Usa Lexico_ClasePractica
-//Solo expresion_aritmeticaes sin ()
-
 %{
 #include <stdio.h>
 #include <stdlib.h>
@@ -267,7 +264,6 @@ tipo_dato:
     }
     | TD_FLOAT 
     {
-        //TipoDatoInd = crearTercetoUnitarioStr(DFLOAT);
         printf("\t\t\t\tR9. Tipo_Dato -> %s\n", $1.str); 
         if(acciones_asignacion_tipo($1.str) != ACCION_EXITOSA)
         {
@@ -277,7 +273,6 @@ tipo_dato:
     }
     | TD_STRING 
     {
-        //TipoDatoInd = crearTercetoUnitarioStr(DSTRING);
         if(acciones_asignacion_tipo($1.str)!=ACCION_EXITOSA)
         {
             free($1.str);
@@ -539,7 +534,7 @@ bloque_asociado:
 bucle:
     WHILE
     {
-        sprintf(operadorAux, "Bucle_%d:", _contadorBucles);
+        sprintf(operadorAux, "ET:Bucle_%d:", _contadorBucles);
         _inicioBucle = crearTercetoUnitarioStr(operadorAux); // me guardo el inicio del bucle
         BucleInd = _inicioBucle;
         _contadorBucles++;

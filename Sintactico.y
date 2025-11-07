@@ -114,7 +114,7 @@ tPila pilaValoresBooleanos;
 tPila pilaIndiceTercetosFuncionesEspeciales;
 tPila pilaBI;
 tPila pilaEstructurasAnidadas;
-tPila pilaIniciosBloquesAsociados;
+tPila pilaSecuenciaAnd;
 
 int indice=0;
 int indiceActual=0;
@@ -209,9 +209,8 @@ FILE *ptercetos;
 programa:
     def_init lista_sentencias
     {
-        sprintf(operandoIzqAux, "[%d]", DefInitInd);
-        sprintf(operandoDerAux, "[%d]", ListaSentenciasInd);
-        ProgramaInd = crearTerceto("PROGRAMA", operandoIzqAux, operandoDerAux);
+        //sprintf(operandoIzqAux, "[%d]", DefInitInd);
+        //sprintf(operandoDerAux, "[%d]", ListaSentenciasInd);
         printf("R1. Programa -> Def_Init Lista_Sentencias\n");
     }
     ;
@@ -219,7 +218,7 @@ programa:
 def_init:
     INIT LLA_ABR bloque_asig LLA_CIE
     {
-        DefInitInd = BloqueAsigInd;
+        //DefInitInd = BloqueAsigInd;
         printf("\t\tR2. Def_Init -> init { Bloque_Asig }\n");
     }
     ;
@@ -238,26 +237,23 @@ bloque_asig:
 lista_id:
     ID
     {
-        ListaIdInd2 = ListaIdInd;
+        //ListaIdInd2 = ListaIdInd;
         if(acciones_definicion_variable($1.str, $1.codValidacion) != ACCION_EXITOSA)
         {
             free($1.str);
             YYABORT;
         }
-        ListaIdInd = crearTercetoUnitarioStr($1.str);
+        //ListaIdInd = crearTercetoUnitarioStr($1.str);
         printf("\t\t\t\tR5. Lista_Id -> [ID: '%s']\n", $1.str);
         free($1.str);
     } 
     | lista_id COMA ID 
     {
-        ListaIdInd2 = ListaIdInd;
+        //ListaIdInd2 = ListaIdInd;
         if(acciones_definicion_variable($3.str, $3.codValidacion) != ACCION_EXITOSA)
         {
             YYABORT;
         } 
-        sprintf(operandoIzqAux, "[%d]", ListaIdInd);
-        sprintf(operandoDerAux, "[%d]", crearTercetoUnitarioStr($3.str));
-        ListaIdInd = crearTerceto("COMA", operandoIzqAux, operandoDerAux);
         printf("\t\t\t\tR6. Lista_Id -> Lista_Id COMA [ID: '%s']\n",$3.str); 
         free($3.str);
     }
@@ -433,7 +429,7 @@ asignacion:
 condicional_si:
     IF PAR_ABR expresion PAR_CIE bloque_asociado %prec MENOS_QUE_ELSE
     {
-        int i = 0, i2 = 0, tieneEstructuraDatosApilada = 0, inicioExpresionAsociada = _inicioBloqueAsociado;
+        int i = _contadorThenTotal, i2 = _contadorElseTotal, tieneEstructuraDatosApilada = 0, inicioExpresionAsociada = _inicioBloqueAsociado;
         DatosEstructura auxDatosEstructura;
         char aux[20];
 
@@ -449,11 +445,6 @@ condicional_si:
                 i2 = auxDatosEstructura.cantElseTotal;
                 inicioExpresionAsociada = auxDatosEstructura.inicioBloqueAsociado;
             }
-        }
-        else
-        {
-            i = _contadorThenTotal;
-            i2 = _contadorElseTotal;
         }
 
         remove_HashMapEntry(hashmapEstructurasAnidadas, aux);
@@ -488,7 +479,7 @@ condicional_si:
     }
     | IF PAR_ABR expresion PAR_CIE bloque_asociado ELSE
     {
-        int i = 0, i2 = 0, tieneEstructuraDatosApilada = 0, inicioExpresionAsociada = _inicioBloqueAsociado;
+        int i = _contadorThenTotal, i2 = _contadorElseTotal, tieneEstructuraDatosApilada = 0, inicioExpresionAsociada = _inicioBloqueAsociado;
         DatosEstructura auxDatosEstructura;
         char aux[20];
 
@@ -506,11 +497,6 @@ condicional_si:
                 i2 = auxDatosEstructura.cantElseTotal;
                 inicioExpresionAsociada = auxDatosEstructura.inicioBloqueAsociado;
             }
-        }
-        else
-        {
-            i = _contadorThenTotal;
-            i2 = _contadorElseTotal;
         }
 
         sprintf(operandoIzqAux, "[%d]", inicioExpresionAsociada);
@@ -577,7 +563,7 @@ bucle:
     PAR_ABR expresion PAR_CIE 
     {
         char aux[20];
-        int i = 0, tieneEstructuraDatosApilada = 0;
+        int i = _contadorThenTotal, tieneEstructuraDatosApilada = 0;
         DatosEstructura auxDatosEstructura;
 
         sprintf(aux, "estructura_%d", _contadorEstructurasAnidadas);
@@ -590,10 +576,6 @@ bucle:
             {
                 i = auxDatosEstructura.cantThenTotal;
             }
-        }
-        else
-        {
-            i = _contadorThenTotal;
         }
 
         sprintf(operandoIzqAux, "[%d]", _inicioBucle);
@@ -609,7 +591,7 @@ bucle:
     bloque_asociado
     {
         char aux[20];
-        int i = 0, tieneEstructuraDatosApilada = 0;
+        int i = _contadorElseTotal, tieneEstructuraDatosApilada = 0;
         DatosEstructura auxDatosEstructura;
 
         sprintf(operandoIzqAux, "[%d]", _inicioBucle);
@@ -626,10 +608,6 @@ bucle:
             {
                 i = auxDatosEstructura.cantElseTotal;
             }
-        }
-        else
-        {
-            i = _contadorElseTotal;
         }
 
         remove_HashMapEntry(hashmapEstructurasAnidadas, aux);
@@ -828,8 +806,12 @@ expresion:
             _soloBooleana = true;
             _contadorThenActual = 0;
             _contadorElseActual = 0;
-            _contadorSecuenciaAnd = 0;
-            _secuenciaAND = false;
+
+            if(!_expresionAnidada)
+            {
+                _contadorSecuenciaAnd = 0;
+                _secuenciaAND = false;
+            }
 
             _contadorExpresionesLogicas = 0;
 
@@ -938,7 +920,6 @@ expresion_logica:
             // según corresponda
 
             _contadorExpresionesLogicas++;
-            _contadorExpresionesAnidadas++;
             
             // a2: eliminar
             // _expresionAnidada = false;
@@ -954,16 +935,6 @@ expresion_logica:
             // desestimo los else
             sacar_de_pila(&pilaBranchElse, &Xind, sizeof(Xind));
             _contadorElseActual--;
-
-            /*
-            if(_accionesExpresionAnidada = false)
-            {
-                _contadorExpresionesAnidadas++;
-                acciones_expresion_logica();
-
-                _accionesExpresionAnidada = true;
-            }
-            */
 
             // y si NO es una SECUENCIA NEGADA, los then van al inicio del cuerpo true superior
 
@@ -1003,32 +974,26 @@ expresion_logica:
             }
             else
             {
-                // si no es negada,
-                // y no hay anidamiento
-                if(!_expresionAnidada)
+                // si hay una secuencia AND y NO es negada,
+                
+                sprintf(operandoIzqAux, "[%d]", getIndice());
+                // desestimo los else del mismo nivel (considerando anidamiento, o no), van hacia la prox eval
+                while(_contadorSecuenciaAnd > 0)
                 {
-                    sprintf(operandoIzqAux, "[%d]", getIndice());
-                    // desestimo los else, van hacia la prox eval
-                    while(_contadorSecuenciaAnd > 0)
+                    if(sacar_de_pila(&pilaBranchElse, &Xind, sizeof(Xind)) == TODO_OK)
                     {
-                        sacar_de_pila(&pilaBranchElse, &Xind, sizeof(Xind));
                         _contadorElseActual--;
+                        printf("\nSACO EL BRANCH NRO  %d\n", Xind);
                         modificarOperandoIzquierdoConTerceto(Xind, operandoIzqAux);
-                        _contadorSecuenciaAnd--;
                     }
-                }
-                else
-                {
-                    // si hay anidamiento
-                    // desestimo solo el último else
-                    sacar_de_pila(&pilaBranchElse, &Xind, sizeof(Xind));
+                    _contadorSecuenciaAnd--;
                 }
             }
         }
 
-        _contadorSecuenciaAnd = 0;
         _secuenciaAND = false;
-
+        _contadorSecuenciaAnd = 0;
+        
         _expresionNueva = true;
         _soloAritmetica = true;
         _soloBooleana = true;
@@ -1091,8 +1056,6 @@ expresion_logica:
             // tengo que tener en cuenta tantos branchs else como operandos izquierdos hayan habido
 
             _contadorExpresionesLogicas++;
-            _contadorExpresionesAnidadas++;
-            _expresionAnidada = false;
 
             printf("\t\t\t\t\tR37. Expresion_Logica -> Expresion OR Expresion\n");
         }
@@ -1145,7 +1108,6 @@ expresion_logica:
 
             _contadorSecuenciaAnd++;
             _contadorExpresionesLogicas++;
-            _contadorExpresionesAnidadas++;
         }
 
         printf("\t\t\t\t\tR39. Expresion_Logica -> Expresion_Para_Condicion\n");
@@ -1228,8 +1190,7 @@ expresion_para_condicion:
 expresion_relacional:
     expresion_relacional CMP_MAYOR expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
 
@@ -1261,8 +1222,7 @@ expresion_relacional:
     }
     | expresion_relacional CMP_MENOR expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
         
@@ -1294,8 +1254,7 @@ expresion_relacional:
     }
     | expresion_relacional CMP_ES_IGUAL expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
         
@@ -1327,8 +1286,7 @@ expresion_relacional:
     }
     | expresion_relacional CMP_DISTINTO expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
         
@@ -1360,8 +1318,7 @@ expresion_relacional:
     }
     | expresion_relacional CMP_MAYOR_IGUAL expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
 
@@ -1393,8 +1350,7 @@ expresion_relacional:
     }
     | expresion_relacional CMP_MENOR_IGUAL expresion_aritmetica %prec PREC_RELACIONAL
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
         sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
 
@@ -1426,14 +1382,15 @@ expresion_relacional:
     }
     | expresion_relacional CMP_ES_IGUAL valor_booleano 
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
-        sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
+        sprintf(operandoDerAux, "[%d]", ValorBooleanoInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
 
         sprintf(_resExpresionRelacional, "@resExpresion_%d", indiceExpresiones);
         poner_en_pila(&pilaValoresBooleanos, _resExpresionRelacional, strlen(_resExpresionRelacional));
         indiceExpresiones++;
+
+        if(_tipoDatoExpresionActual)
 
         if(get_HashMapEntry_value(hashmap, _resExpresionRelacional) == HM_KEY_NOT_FOUND)
         {
@@ -1459,9 +1416,8 @@ expresion_relacional:
     }
     | expresion_relacional CMP_DISTINTO valor_booleano 
     {
-        ExpresionRelacionalInd2 = ExpresionRelacionalInd;
-        sprintf(operandoIzqAux, "[%d]", ExpresionAritmeticaInd2);
-        sprintf(operandoDerAux, "[%d]", ExpresionAritmeticaInd);
+        sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
+        sprintf(operandoDerAux, "[%d]", ValorBooleanoInd);
         ExpresionRelacionalInd = crearTerceto("CMP", operandoIzqAux, operandoDerAux);
 
         sprintf(_resExpresionRelacional, "@resExpresion_%d", indiceExpresiones);
@@ -1633,12 +1589,33 @@ factor:
         _soloAritmetica = true;
         _soloBooleana = true;
         _expresionAnidada = true;
+        poner_en_pila(&pilaSecuenciaAnd, &_contadorSecuenciaAnd, sizeof(_contadorSecuenciaAnd));
+        _contadorSecuenciaAnd = 0;
+        _contadorExpresionesAnidadas++;
+
     }
     expresion PAR_CIE 
     {
+        int aux;
         FactorInd = ExpresionInd;
         
         _expresionNueva = false;
+        
+        if(sacar_de_pila(&pilaSecuenciaAnd, &aux, sizeof(aux)) == TODO_OK)
+        {
+            _contadorSecuenciaAnd += aux;
+        }
+        else
+        {
+            _contadorSecuenciaAnd = 0;
+        }
+
+        _contadorExpresionesAnidadas--;
+
+        if(_contadorExpresionesAnidadas == 0)
+        {
+            _expresionAnidada = false;
+        }
 
         printf("\t\t\t\t\t\t\tR60. Factor -> (Expresion)\n");
     }
@@ -1662,7 +1639,7 @@ int main(int argc, char *argv[])
     crear_pila(&pilaBI);
     crear_pila(&pilaValoresBooleanos);
     crear_pila(&pilaEstructurasAnidadas);
-    crear_pila(&pilaIniciosBloquesAsociados);
+    crear_pila(&pilaSecuenciaAnd);
     hashmapEstructurasAnidadas = create_HashMap(HASHMAP_SIZE);
 
     printf("\n-----------------------------------------------------------------------------------------------------------------\n");
@@ -1696,7 +1673,7 @@ int main(int argc, char *argv[])
     vaciar_pila(&pilaBI);
     vaciar_pila(&pilaValoresBooleanos);
     vaciar_pila(&pilaEstructurasAnidadas);
-    vaciar_pila(&pilaIniciosBloquesAsociados);
+    vaciar_pila(&pilaSecuenciaAnd);
     destroy_HashMap(hashmapEstructurasAnidadas);
 
     imprimirTercetos();

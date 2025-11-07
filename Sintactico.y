@@ -70,21 +70,13 @@ int FactorInd;
 
 // Indices Auxiliares (Para expresiones dobles)
 int ExpresionAritmeticaInd2;
-
 int ExpresionParaCondicionInd2;
-
 int BloqueAsociadoInd2;
-
 int ListaSentenciasInd2;
-
 int ListaIdInd2;
-
 int BloqueAsigInd2;
-
 int ExpresionRelacionalInd2;
-
 int ExpresionLogicaInd2;
-
 int SentenciaInd2;
 int Xind;
 
@@ -209,8 +201,6 @@ FILE *ptercetos;
 programa:
     def_init lista_sentencias
     {
-        //sprintf(operandoIzqAux, "[%d]", DefInitInd);
-        //sprintf(operandoDerAux, "[%d]", ListaSentenciasInd);
         printf("R1. Programa -> Def_Init Lista_Sentencias\n");
     }
     ;
@@ -218,7 +208,6 @@ programa:
 def_init:
     INIT LLA_ABR bloque_asig LLA_CIE
     {
-        //DefInitInd = BloqueAsigInd;
         printf("\t\tR2. Def_Init -> init { Bloque_Asig }\n");
     }
     ;
@@ -237,19 +226,16 @@ bloque_asig:
 lista_id:
     ID
     {
-        //ListaIdInd2 = ListaIdInd;
         if(acciones_definicion_variable($1.str, $1.codValidacion) != ACCION_EXITOSA)
         {
             free($1.str);
             YYABORT;
         }
-        //ListaIdInd = crearTercetoUnitarioStr($1.str);
         printf("\t\t\t\tR5. Lista_Id -> [ID: '%s']\n", $1.str);
         free($1.str);
     } 
     | lista_id COMA ID 
     {
-        //ListaIdInd2 = ListaIdInd;
         if(acciones_definicion_variable($3.str, $3.codValidacion) != ACCION_EXITOSA)
         {
             YYABORT;
@@ -262,7 +248,6 @@ lista_id:
 tipo_dato:
     TD_BOOLEAN 
     {
-        TipoDatoInd = crearTercetoUnitarioStr(DBOOLEAN);
         printf("\t\t\t\tR7. Tipo_Dato -> %s\n", $1.str); 
         if(acciones_asignacion_tipo($1.str) != ACCION_EXITOSA)
         {
@@ -272,7 +257,6 @@ tipo_dato:
     }
     | TD_INT 
     {
-        TipoDatoInd = crearTercetoUnitarioStr(DINTEGER);
         if(acciones_asignacion_tipo($1.str) != ACCION_EXITOSA)
         {
             free($1.str);
@@ -283,7 +267,7 @@ tipo_dato:
     }
     | TD_FLOAT 
     {
-        TipoDatoInd = crearTercetoUnitarioStr(DFLOAT);
+        //TipoDatoInd = crearTercetoUnitarioStr(DFLOAT);
         printf("\t\t\t\tR9. Tipo_Dato -> %s\n", $1.str); 
         if(acciones_asignacion_tipo($1.str) != ACCION_EXITOSA)
         {
@@ -293,7 +277,7 @@ tipo_dato:
     }
     | TD_STRING 
     {
-        TipoDatoInd = crearTercetoUnitarioStr(DSTRING);
+        //TipoDatoInd = crearTercetoUnitarioStr(DSTRING);
         if(acciones_asignacion_tipo($1.str)!=ACCION_EXITOSA)
         {
             free($1.str);

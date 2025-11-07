@@ -1,78 +1,40 @@
 #+ \ Esto es un "programa" # +#
 
+#+ ---------------------------------------- +#
 #+ /* Bloque de declaracion de variables // +#
+#+ ---------------------------------------- +#
 init { #+|+#
-	a1, b1, a, b, ar0 : Float
-	var1, c, d, h, i, j, e, f: Int
-	s, contador, D : Int
-	p1, p2, p3 : String 
-	y, res : Boolean
+	varFloat: Float
+	varInt, a, b, c, d, e, f, x: Int
+	varStr, base : String 
+	varBool, y : Boolean
 }
 
-if(c AND d)
-	if(y)
-		if(res)
-			if(a OR b)
-			{
-				if(D < 100)
-				{
-					if(j)
-					{
-						p3 := "parte true estructura mas interna"
-					}
-				}
-				else
-					p1 := "parte else estructura mas interna"
-			}
 
-if((1==0 AND b<c) OR (f == true))
-{ #++#
-	a:=5
-}
+#+ ---------------------------------------- +#
+#+ While +#
+#+ ---------------------------------------- +#
+a := 1
+b := 3
 
-if(2==0 AND b<c OR f == true)
+while (a > b)
 {
-	a:=5
+    write("a es mas grande que b")
+    a := a + 1
 }
 
-if(3==0 OR b<c OR f)
-{ #++#
-	a:=5
-}
 
-if(4==0 AND false OR f)
-{ #++#
-	a:=5
-}
+#+ ---------------------------------------- +#
+#+ If +#
+#+ ---------------------------------------- +#
 
-if(5==0 AND (false OR f))
-{ #++#
-	a:=5
-}
-
-while(43+342+324)
+#+ 1- Condicional simple sin else +#
+if (a > b)
 {
-	c := 3
+    write("a es mas grande que b")
 }
 
-if(a > 5 AND c > 5 AND d < 3 OR (NOT res == false) AND 4 + 5 + 6 OR isZero(35 - f) AND equalExpressions(contador, D))
-{
-	if(true OR c != h)
-		res := false
-	else
-	{
-		contador++
-		p1 := "un string"
-	}
-}
-
-#+ Condicional simple sin else +#
-if(a==0 AND b<c AND y != true)
-{ #++#
-	a:=5
-}
-
-#+ Condicional simple con else +#
+#+ 2- Condicional simple con else +#
 if (a > b)
 {
     write("a es mas grande que b (a > b)")
@@ -82,34 +44,34 @@ else
     write("a es mas chico o igual a b (a <= b)")
 }
 
-#+ Condicional compuesto AND sin else +#
+#+ 3- Condicional compuesto AND sin else +#
 if (a > b AND c > b)
 {
     write("a y c mas grandes que b [a > b & c > b]")
 }
 
-#+ Condicional compuesto OR sin else +#
+#+ 4- Condicional compuesto OR sin else +#
 if (a > b OR c > b)
 {
     write("a es mas grande que b y c es mas grande que b")
 }
 
-#+ Condicional compuesto NOT sin else +#
+#+ 5- Condicional compuesto NOT sin else +#
 if (NOT a > b)
 {
     write("a no es mas grande que b -> !(a > b)")
 }
 
-#+ Condicional compuesto con else +#
+#+ 6- Condicional compuesto con else +#
 if(a==0 AND b<c)
 { 
 	a:=5
 } else 
 {
-	b := 5.1
+	b := 1
 }
 
-#+ If anidado +#
+#+ 7- If anidado +#
 if (a > b)
 {
     if (a > b)
@@ -118,12 +80,133 @@ if (a > b)
 	}
 }
 
-#+ while +#
-a := 1
+
+#+ -------------------------- +#
+#+ Asignaciones +#
+#+ -------------------------- +#
+varFloat := 99999.99
+varFloat := 99.
+varFloat := .9999
+
+varStr := "@sdADaSjfla%dfg"
+varStr := "asldk  fh sjf"
+
+
+#+ ---------------------------------------- +#
+#+ Operaciones Aritmeticas +#
+#+ ---------------------------------------- +#
+x =: 27 - c
+x =: d + 500
+x =: 34 * 3
+x =: e / f
+
+
+#+ ---------------------------------------- +#
+#+ Entrada y Salida +#
+#+ ---------------------------------------- +#
+read(base)  #+ base es una variable Str+#
+
+write(“ewr”)  #+ “ewr” es una cte string +#
+write(varStr)  #+ varStr es una variable numérica definida previamente +#
+
+
+#+ ---------------------------------------- +#
+#+ Llamada a funcion izZero() +#
+#+ ---------------------------------------- +#
+a := 3
+b := 44
+c := 10
+while (isZero( c - 10 ))
+{
+    write("El contador vale 10")
+    c := c - 1
+}
+if (isZero( a*7+1-b/2 ))
+{
+    write("La expresion es igual a cero")
+}
+
+
+#+ ---------------------------------------- +#
+#+ Llamada a funcion equalExpressions() +#
+#+ ---------------------------------------- +#
+a := 2
 b := 3
 
-while (a > b)
-{
-    write("a es mas grande que b")
-    a := a + 1
-}
+y := equalExpressions(a + b, 5, b * 2, 3 + 2, a + b) 
+y := equalExpressions(0, -5, a + b)
+
+y := equalExpressions(0, 0, -5, 1, 5, 0)
+
+
+
+#+ ---------------------------------------------- +#
+#+ ---------------------------------------------- +#
+#+ 				EJEMPLO DE ERRORES +#
+#+ ---------------------------------------------- +#
+#+ ---------------------------------------------- +#
+
+#+ Esta es una asignacion incorrecta +#
+#+ a ::= 5 +#
+
+#+ Esta es un while incorrecto +#
+#+ while [a > b] { write("a es mas grande que b") a := a + 1 } +#
+
+#+ Esta es una sentencia if incorrecta +#
+#+ 	if( (a == b ) 	+#
+#+		a:=c   +#		
+#+	else if	+#		
+#+		c:=A	+#		
+#+	else	+#	
+#+		a:=c2	+#	
+
+#+ Esta es una resta incorrecta +#
+#+ x := 27 -- c +#
+
+#+ Esta es una suma incorrecta +#
+#+ x := r ++ 500 +#
+
+#+ Esta es una multiplicacion incorrecta +#
+#+ x := 34 ** 3 +#
+
+#+ Esta es una division incorrecta +#
+#+ x := z // f +#
+
+#+ Esta es una entrada incorrecta+#
+#+ x := read var1 +#
+
+#+ Esta es una entrada incorrecta+#
+#+ x := read var1 +#
+
+#+ Esta es una salida incorrecta+#
+#+ write var1 +#
+
+#+ Esta es una declaracion de variables incorrecta +#
+#+ int a,b,c +#
+
+#+ Esta es un tipo de dato int que supera el rango maximo +#
+#+ a := 9999999999999999999999999999 +#
+
+#+ Esta es un tipo de dato float que supera el rango maximo +#
+#+ a := 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.9999999999999999999999999999999 +#
+
+#+ Esta es un tipo de dato string que supera el rango maximo +#
+#+ a := "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +#
+
+#+ Este es un comentario erroneo +#
+#+ // comentario +#
+
+#+ Esta es un condicional AND incorrecto +#
+#+ AND(var1,var2) +#
+
+#+ Este es un condicional OR incorrecto +#
+#+ if (a > b || c > b) +#
+
+#+ Esta es un condicional NOT incorrecto +#
+#+  a =! b +#
+
+
+
+
+
+

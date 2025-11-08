@@ -22,16 +22,9 @@
 #include "Tercetos.h"
 
 /* Defines */
-#define TAM_MAX_STRING 50
-#define TAM_MAX_ID     100
-#define CARACTER_NO_RECONOCIDO -4322
-
-typedef struct {
-    int cantThenTotal;
-    int cantElseTotal;
-    int cantSecuenciaAnd;
-    int inicioBloqueAsociado;
-} DatosEstructura;
+#define TAM_MAX_STRING              50
+#define TAM_MAX_ID                  100
+#define CARACTER_NO_RECONOCIDO      -4322
 
 /* Variables Globales */
 FILE  *yyin;
@@ -46,20 +39,16 @@ extern tPila pilaBranchThen;
 extern tPila pilaBranchElse;
 extern tPila pilaIndiceTercetosFuncionesEspeciales;
 extern tPila pilaBI;
-extern FILE *ptercetos;
 extern int _inicioExpresion;
 extern int _inicioBloqueAsociado;
-extern int _contadorThenActual;
 extern int _contadorEstructurasAnidadas;
 extern int _ultRefContadorEstructuras;
-extern DatosEstructura datosEstructuraActual;
 extern int _contadorThenTotal;
 extern int _contadorElseTotal;
 
 char *yyltext; 
 
 int yyerror(void);
-
 
 /* Funciones Auxiliares*/
 int validar_entero(const char* lexema);
@@ -68,7 +57,6 @@ int validar_string(const char* lexema);
 int validar_id(const char* lexema);
 void finalizar_recursos();
 void guardar_conteo_then();
-
 %}
 
 /*---------------------------------------------*/
@@ -228,7 +216,7 @@ COMENTARIO              {COM_ABR}({LETRA}|{LETRA_ESP}|{DIGITO}|{OP_O_COMP}|{SIMB
 %%
 
 /*---------------------------------------------*/
-/* Seccion Codigo */
+/* Seccion Codigo - Validaciones de Tokerns */
 /*---------------------------------------------*/
 
 int validar_entero(const char* lexema) {
@@ -316,6 +304,10 @@ int validar_id(const char* lexema) {
     return ID;
 }
 
+
+/*---------------------------------------------*/
+/* Seccion Codigo - Funciones de Cierre */
+/*---------------------------------------------*/
 void finalizar_recursos()
 {
     printf("\n\nFinalizando recursos y saliendo...\n\n");

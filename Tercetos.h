@@ -8,7 +8,6 @@
 
 #define MAX_TERCETOS 4000
 
-/*VARIABLES GLOBALES*/
 extern FILE *ptercetos;
 
 typedef struct {

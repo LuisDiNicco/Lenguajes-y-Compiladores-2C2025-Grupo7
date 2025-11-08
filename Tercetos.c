@@ -42,31 +42,6 @@ int getIndice()
     return indiceTerceto;
 }
 
-char* verOperadorTerceto(int indice)
-{
-    /* indice indica el terceto */
-
-    return tercetos[indice].operador;
-}
-
-void modificarOperadorTerceto(int indice, char* op)
-{
-    /* Esto se usa para negar la condición de salto */
-    /* indice indica el terceto */
-    /* op es el salto */
-
-    strcpy(tercetos[indice].operador, op);
-}
-
-void modificarOperandoDerechoConTerceto(int indice, char *nroTerceto)
-{
-    /* Esto se usa para negar la condición de salto */
-    /* indice indica el terceto */
-    /* op es el salto */
-
-    strcpy(tercetos[indice].operandoDer, nroTerceto);
-}
-
 void modificarOperandoIzquierdoConTerceto(int indice, char *nroTerceto)
 {
     /* Esto se usa para negar la condición de salto */

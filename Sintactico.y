@@ -1595,6 +1595,10 @@ void inicializar_recursos_internos()
         add_HashMapEntry(hashmap, "@actual", 0);
         agregar_a_tabla_variables_internas(&tabla, "@actual", "Int");
     }
+
+    agregar_a_tabla_variables_internas(&tabla, "1", "Int");
+
+    agregar_a_tabla_variables_internas(&tabla, "0", "Int");
 }
 
 /*----------------------------------------------------------------------------

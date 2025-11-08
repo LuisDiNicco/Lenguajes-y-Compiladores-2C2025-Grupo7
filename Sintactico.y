@@ -84,11 +84,8 @@ int esNumero(const char *str);
 void reemplazarGuionBajo(char *str);
 void reemplazar_booleanos(char *operadorIzq, char *operadorDer);
 
-int ProgramaInd;
-int DefInitInd;
 int BloqueAsigInd;
 int ListaIdInd;
-int TipoDatoInd;
 int ListaSentenciasInd;
 int SentenciaInd;
 int AsignacionInd;
@@ -111,8 +108,6 @@ int ExpresionAritmeticaInd2;
 int ExpresionParaCondicionInd2;
 int BloqueAsociadoInd2;
 int ListaSentenciasInd2;
-int ListaIdInd2;
-int BloqueAsigInd2;
 int ExpresionRelacionalInd2;
 int ExpresionLogicaInd2;
 int SentenciaInd2;
@@ -166,17 +161,12 @@ bool _expresionAnidada = false;
 bool _accionesExpresionAnidada = false;
 
 char _resExpresionRelacional[MAX_RES_EXP];
-char _resExpresionLogica[MAX_RES_EXP];
-char _expresionEmparentadaActual[4];
-
 
 Tabla tabla;
 HashMap *hashmap;
 HashMap *hashmapEstructurasAnidadas;
 tPila pilaVars;
 FILE *ptercetos;
-
-
 %}
 
 %union {
@@ -1572,8 +1562,6 @@ int main(int argc, char *argv[])
     vaciar_pila(&pilaSecuenciaAnd);
     destroy_HashMap(hashmapEstructurasAnidadas);
 
-    imprimirTercetos();
-
     return PROCESO_EXITOSO;
 }
 
@@ -1913,6 +1901,7 @@ void VectorStr_Eliminar(VectorStrings* vec, const char* str) {
 
 void generar_assembler(char* nombre_archivo_asm, char* nombre_archivo_tabla, char* nombre_archivo_tercetos) 
 {
+    imprimirTercetos();
     FILE *fileASM = fopen(nombre_archivo_asm, "w");
     if (fileASM == NULL) {
         printf("Error al intentar guardar el codigo assemblr en archivo %s.", nombre_archivo_asm);

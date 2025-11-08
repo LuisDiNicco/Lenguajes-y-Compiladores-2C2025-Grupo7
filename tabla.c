@@ -288,8 +288,3 @@ void reemplazar(char* palabra, char buscar, char reemplazar){
         }
     }
 }
-
-void imprimir_datos_vars_internas(void *nombre, void *pf)
-{
-    ;
-}

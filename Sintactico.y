@@ -13,15 +13,15 @@
 
 #define ES_LETRA_MAYUSC(x)((x>64) && (x<91))
 
-#define HASHMAP_SIZE 10
-#define ERROR_APERTURA_ARCHIVO -213
-#define PROCESO_EXITOSO 0
+#define HASHMAP_SIZE                10
+#define ERROR_APERTURA_ARCHIVO      -213
+#define PROCESO_EXITOSO             0
 
-#define MAX_RES_EXP 50
+#define MAX_RES_EXP                 50
 
-#define NOMBRE_ARCHIVO_ASM "final.asm"
-#define NOMBRE_ARCHIVO_TABLA "Symbol-Table.txt"
-#define NOMBRE_ARCHIVO_TERCETOS "intermediate-code.txt"
+#define NOMBRE_ARCHIVO_ASM          "final.asm"
+#define NOMBRE_ARCHIVO_TABLA        "Symbol-Table.txt"
+#define NOMBRE_ARCHIVO_TERCETOS     "intermediate-code.txt"
 
 typedef struct {
     int cantThenTotal;
@@ -30,7 +30,6 @@ typedef struct {
     int inicioBloqueAsociado;
 } DatosEstructura;
 
-// Asembler
 // Estructura para mapear nombres de la tabla de simbolos a nombres de variables ASM
 typedef struct {
     char indice[50];
@@ -56,7 +55,7 @@ typedef struct {
 } VectorStrings;
 
 int yystopparser = 0;
-extern FILE  *yyin; // Tuve que declararlo como extern para que compile
+extern FILE  *yyin;
 
 int yyerror();
 int yylex();
@@ -65,13 +64,11 @@ int acciones_definicion_variable(const char *id, int codValidacion);
 int acciones_asignacion_tipo(const char *tipoDato);
 int acciones_asignacion_variable_general(const char *id, int codValidacion, const char *tipoResultado);
 int acciones_asignacion_literal(const char *id, int codValidacionId, int codValCadenaAsignada);
-int acciones_definicion_tipo_retorno(const char *id, int codValidacion);
 int acciones_verificacion_compatibilidad_tipo(int codValidacion, const char *tipoCte);
 int acciones_parametro_read(const char *id, int codValidacion);
 void recorrer_lista_argumentos_equalexpressions(tPila *pilaIndiceTercetosFuncionesEspeciales);
 void completar_bi_equalexpressions(tPila *pilaBI);
 int establecer_nuevo_operando_izquierdo(void *nro_terceto, void *nro_branch_actualizado);
-void acciones_expresion_logica();
 void inicializar_recursos_internos();
 
 void reemplazarGuionBajo(char *str);
@@ -110,23 +107,14 @@ int ExpresionAritmeticaInd;
 int TerminoInd;
 int FactorInd;
 
-// Indices Auxiliares (Para expresiones dobles)
 int ExpresionAritmeticaInd2;
-
 int ExpresionParaCondicionInd2;
-
 int BloqueAsociadoInd2;
-
 int ListaSentenciasInd2;
-
 int ListaIdInd2;
-
 int BloqueAsigInd2;
-
 int ExpresionRelacionalInd2;
-
 int ExpresionLogicaInd2;
-
 int SentenciaInd2;
 int Xind;
 
@@ -1852,47 +1840,6 @@ int establecer_nuevo_operando_izquierdo(void *nro_terceto, void *nro_branch_actu
     modificarOperandoIzquierdoConTerceto(n_terceto, (char *) nro_branch_actualizado);
 
     return 1;
-}
-
-void acciones_expresion_logica()
-{
-    char aux[20];
-
-    if(_ultRefContadorEstructuras != _contadorEstructurasAnidadas)
-        {
-            // en caso de que se haya progresado en anidamiento, obtengo la entry y seteo que apilé
-            if(_contadorEstructurasAnidadas >= 2)
-            {
-                sprintf(aux, "estructura_%d", _contadorEstructurasAnidadas - 1);
-                update_HashMapEntry_value(hashmapEstructurasAnidadas, aux, 1);
-            }
-
-            datosEstructuraActual.cantThenTotal = _contadorThenTotal;
-            datosEstructuraActual.cantElseTotal = _contadorElseTotal;
-            datosEstructuraActual.cantSecuenciaAnd = _contadorSecuenciaAnd;
-            // cada elemento apilado corresponde a _contadorEstructurasAnidadas - 1
-            poner_en_pila(&pilaEstructurasAnidadas, &datosEstructuraActual, sizeof(datosEstructuraActual));
-            _ultRefContadorEstructuras++;
-
-            // creo la entry para la nueva estructura y defino que no apilé nada para la misma
-            sprintf(aux, "estructura_%d", _contadorEstructurasAnidadas);
-            add_HashMapEntry(hashmapEstructurasAnidadas, aux, 0);
-
-            _contadorThenTotal = 0;
-            _contadorElseTotal = 0;
-            _contadorSecuenciaAnd = 0;
-        }
-
-        _contadorThenTotal += _contadorThenActual;
-        _contadorElseTotal += _contadorElseActual;
-
-        _soloAritmetica = true;
-        _soloBooleana = true;
-        _expresionNueva = true;
-        vaciarLista(&listaAuxiliar);
-        _contadorThenActual = 0;
-
-        _contadorExpresionesLogicas = 0;
 }
 
 void reemplazarGuionBajo(char *str) {

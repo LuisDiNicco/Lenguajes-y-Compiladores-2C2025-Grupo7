@@ -81,10 +81,7 @@ void guardar_conteo_then();
 
 /* Conjuntos */
 DIGITO			        [0-9]
-DIGITO_POSITIVO         [1-9]
 LETRA			        [a-zA-Z]
-LETRA_MIN               [a-z]
-LETRA_MAY               [A-Z]
 LETRA_ESP               [áéíóúÁÉÍÓÚñÑÜü]
 
 HEXA                    [0-9a-fA-F]
@@ -152,14 +149,11 @@ FALSE                   "false"
 FN_EQUALEXPRESSIONS     "equalExpressions"
 FN_ISZERO               "isZero"
 
-RET                     "return"
-
 /* Regex: TOKENS*/
 ESCAPE_SIMPLE           \\[\'\"\\\?abfnrtv]   
 ESCAPE_OCTAL            \\{OCTAL}{1,3}       
 ESCAPE_HEX              \\x{HEXA}+          
 ESCAPE                  ({ESCAPE_SIMPLE}|{ESCAPE_OCTAL}|{ESCAPE_HEX})
-CARACTER                ({CARACTER_SIMPLE}|{ESCAPE})
 
 CTE_INT		            {DIGITO}+
 CTE_REAL                ({DIGITO}+{PUNTO}{DIGITO}+|{DIGITO}+{PUNTO}{DIGITO}*|{DIGITO}*{PUNTO}{DIGITO}+)

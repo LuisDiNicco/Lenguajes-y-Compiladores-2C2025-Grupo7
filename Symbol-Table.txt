@@ -8,6 +8,8 @@
 | varFloat                                             | Float      | -                                                  | -          |
 | j                                                    | Float      | -                                                  | -          |
 | G                                                    | Float      | -                                                  | -          |
+| j                                                    | Float      | -                                                  | -          |
+| G                                                    | Float      | -                                                  | -          |
 | varInt                                               | Int        | -                                                  | -          |
 | a                                                    | Int        | -                                                  | -          |
 | b                                                    | Int        | -                                                  | -          |
@@ -50,18 +52,9 @@
 | _"x es 500"                                          | CTE_STRING | "x es 500"                                         | 10         |
 | _"x en realidad es el siguiente nro:"                | CTE_STRING | "x en realidad es el siguiente nro:"               | 36         |
 | 34                                                   | CTE_INT    | 34                                                 | -          |
-| _"34 * 3 ="                                          | CTE_STRING | "34 * 3 ="                                         | 10         |
-| 8                                                    | CTE_INT    | 8                                                  | -          |
-| _"5/8 ="                                             | CTE_STRING | "5/8 ="                                            | 7          |
-| _"ingrese un nro"                                    | CTE_STRING | "ingrese un nro"                                   | 16         |
-| _"ewr es una cte string"                             | CTE_STRING | "ewr es una cte string"                            | 23         |
-| 100                                                  | CTE_INT    | 100                                                | -          |
-| 101                                                  | CTE_INT    | 101                                                | -          |
-| 45                                                   | CTE_INT    | 45                                                 | -          |
-| 99                                                   | CTE_INT    | 99                                                 | -          |
-| 0_500000000                                          | CTE_REAL   | 0.500000000                                        | -          |
-| _"parte true estructura mas interna"                 | CTE_STRING | "parte true estructura mas interna"                | 35         |
-| _"parte else estructura mas interna"                 | CTE_STRING | "parte else estructura mas interna"                | 35         |
-| 55                                                   | CTE_INT    | 55                                                 | -          |
-| _"efectivamente no es 0"                             | CTE_STRING | "efectivamente no es 0"                            | 23         |
+| _"ewr"                                               | CTE_STRING | "ewr"                                              | 5          |
+| 2                                                    | CTE_INT    | 2                                                  | -          |
+| @resEqualExpressions                                 | Boolean    | -                                                  | -          |
+| @pivote                                              | Int        | -                                                  | -          |
+| @actual                                              | Int        | -                                                  | -          |
 -------------------------------------------------------------------------------------------------------------------------------------

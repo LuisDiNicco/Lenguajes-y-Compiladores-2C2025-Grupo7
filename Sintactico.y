@@ -1190,10 +1190,21 @@ expresion_para_condicion:
         if(_soloAritmetica && _expresionNueva)
         {   
             sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
-            int indOpDer = crearTercetoUnitarioStr("0");
-            sprintf(operandoDerAux, "[%d]", indOpDer);
-            crearTerceto("CMP", operandoIzqAux, operandoDerAux); // cero ya que una expresión aritmética es VERDADERO si es <> 0
+            crearTerceto("CMP", operandoIzqAux, "0"); // cero ya que una expresión aritmética es VERDADERO si es <> 0
 
+            // a4: eliminar
+            //sprintf(_resExpresionRelacional, "@resExpresionRelacional_%d", indiceExpresiones);
+            //poner_en_pila(&pilaValoresBooleanos, _resExpresionRelacional, strlen(_resExpresionRelacional));
+            //indiceExpresiones++;
+
+            // a4: eliminar
+            //if(get_HashMapEntry_value(hashmap, _resExpresionRelacional) == HM_KEY_NOT_FOUND)
+            //{
+            //    add_HashMapEntry(hashmap, _resExpresionRelacional, 0);
+            //    agregar_a_tabla_variables_internas(&tabla, _resExpresionRelacional, "Boolean");
+            //}
+            
+            // a4: modificar
             // branch por else
             sprintf(operandoIzqAux, "[%d]", getIndice() + 2);
             indiceBranchElse = crearTerceto("BE", operandoIzqAux, "_");
@@ -1205,10 +1216,16 @@ expresion_para_condicion:
         if(_soloBooleana && _expresionNueva)
         {
             sprintf(operandoIzqAux, "[%d]", ExpresionRelacionalInd);
-            int indOpDer = crearTercetoUnitarioStr("true");
-            sprintf(operandoDerAux, "[%d]", indOpDer);
-            crearTerceto("CMP", operandoIzqAux, operandoDerAux);
+            crearTerceto("CMP", operandoIzqAux, "VERDADERO");
 
+            // a4: eliminar
+            //if(get_HashMapEntry_value(hashmap, _resExpresionRelacional) == HM_KEY_NOT_FOUND)
+            //{
+            //    add_HashMapEntry(hashmap, _resExpresionRelacional, 0);
+            //    agregar_a_tabla_variables_internas(&tabla, _resExpresionRelacional, "Boolean");
+            //}
+
+            // a4: modificar
             // branch por else
             sprintf(operandoIzqAux, "[%d]", getIndice() + 2);
             indiceBranchElse = crearTerceto("BNE", operandoIzqAux, "_");
@@ -2565,31 +2582,7 @@ void generar_assembler(char* nombre_archivo_asm, char* nombre_archivo_tabla, cha
         }
         else 
         {
-            char ultOp[50];
-
-            if(pilaASM.count > 0)
-            {
-                Pila_Pop(&pilaASM, ultOp);
-            }
-            else
-            {
-                strcpy(ultOp, "###");
-            }
-
-            // si la operación previa fue arimética
-            if(strcmp(ultOp, "@@@") == 0)
-            {
-                strcpy(operadorIzq, _terceto->operador);
-                Pila_Push(&pilaASM, ultOp);
-            } 
-            else
-            {  // si la operación previa NO fue aritmética
-                if(strcmp(ultOp, "###") != 0)
-                {  // y además NO fue una asignación o caso base
-                    Pila_Push(&pilaASM, ultOp);
-                }
-                Pila_Push(&pilaASM, _terceto->operador);
-            }
+            Pila_Push(&pilaASM, _terceto->operador);
         }
     } 
 
@@ -2656,24 +2649,4 @@ int esNumero(const char *str) {
 
     // No puede ser solo un punto o signo
     return (*str != '\0');
-}
-
-void reemplazar_booleanos(char *operadorIzq, char *operadorDer)
-{
-    if(operadorIzq && (strcmpi(operadorIzq, "TRUE") == 0))
-    {
-        sprintf(operadorIzq, "_cte_1");
-    }
-    if(operadorIzq && (strcmpi(operadorIzq, "FALSE") == 0))
-    {
-        sprintf(operadorIzq, "_cte_0");
-    }
-    if(operadorDer && (strcmpi(operadorDer, "TRUE") == 0))
-    {
-        sprintf(operadorDer, "_cte_1");
-    }
-    if(operadorDer && (strcmpi(operadorDer, "FALSE") == 0))
-    {
-        sprintf(operadorDer, "_cte_0");
-    }
 }

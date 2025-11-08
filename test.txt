@@ -148,42 +148,16 @@ read(base)  #+ base es una variable Str+#
 write("ewr es una cte string")  #+ "ewr" es una cte string +#
 write(varInt)  #+ varInt es una variable numerica definida previamente +#
 
-equalExpressions(a + b, 100)
+#+ ---------------------------------------- +#
+#+ Llamada a funcion equalExpressions() +#
+#+ ---------------------------------------- +#
+a := 2
+b := 3
 
-res := true
-c := 1
-d := 101
-y := true
-a := 0
-b := 45
-G := 99
-j := 0.5
+y := equalExpressions(a + b, 5, b * 2, 3 + 2, a + b) 
+y := equalExpressions(0, -5, a + b)
 
-if(c AND d)
-	if(y)
-		if(res)
-			if(a OR b)
-			{
-				if(G < 100)
-				{
-					if(j)
-					{
-						p3 := "parte true estructura mas interna"
-                        write(p3)
-					}
-				}
-				else
-                {
-					p1 := "parte else estructura mas interna"
-                    write(p1)
-                }
-			}
-
-
-if (isZero(55) != true)
-{
-    write("efectivamente no es 0")
-}
+y := equalExpressions(0, 0, -5, 1, 5, 0)
 
 #+ ---------------------------------------------- +#
 #+ ---------------------------------------------- +#

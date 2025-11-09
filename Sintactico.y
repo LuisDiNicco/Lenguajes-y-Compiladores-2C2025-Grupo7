@@ -1596,9 +1596,8 @@ void inicializar_recursos_internos()
         agregar_a_tabla_variables_internas(&tabla, "@actual", "Int");
     }
 
-    agregar_a_tabla_variables_internas(&tabla, "1", "Int");
-
-    agregar_a_tabla_variables_internas(&tabla, "0", "Int");
+    agregar_a_tabla_constantes_internas(&tabla, "1", DCTEINT, "1");
+    agregar_a_tabla_constantes_internas(&tabla, "0", DCTEINT, "0");
 }
 
 /*----------------------------------------------------------------------------

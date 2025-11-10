@@ -1,0 +1,40 @@
+#+ \ Esto es un "programa" # +#
+
+#+ ---------------------------------------- +#
+#+ /* Bloque de declaracion de variables // +#
+#+ ---------------------------------------- +#
+init { #+|+#
+	varFloat, j, G: Float
+	varInt, a, b, c, d, e, f, x: Int
+	varStr, base, p1, p2, p3 : String 
+	varBool, y, res : Boolean
+}
+
+
+#+ ---------------------------------------- +#
+#+ While +#
+#+ ---------------------------------------- +#
+a := 9
+b := 5
+c := 3
+d := 2
+
+while (a > b)
+{
+    write("a es mas grande que b")
+    a--
+	x := 33 / a
+	write(x)
+	while(c > 0)
+	{
+		write("c es menor a 6")
+    	c--
+		while(d < 5)
+		{
+			write("d es menor a 5")
+			d++
+		}
+	}
+	write("PASO FIN DE A > B")
+	e := 5 / c
+}

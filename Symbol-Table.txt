@@ -5,6 +5,8 @@
 | @resIsZero                                           | Boolean    | -                                                  | -          |
 | @pivote                                              | Int        | -                                                  | -          |
 | @actual                                              | Int        | -                                                  | -          |
+| 1                                                    | CTE_INT    | 1                                                  | -          |
+| 0                                                    | CTE_INT    | 0                                                  | -          |
 | varFloat                                             | Float      | -                                                  | -          |
 | j                                                    | Float      | -                                                  | -          |
 | G                                                    | Float      | -                                                  | -          |
@@ -24,19 +26,18 @@
 | varBool                                              | Boolean    | -                                                  | -          |
 | y                                                    | Boolean    | -                                                  | -          |
 | res                                                  | Boolean    | -                                                  | -          |
+| 1_500000000                                          | CTE_REAL   | 1.500000000                                        | -          |
+| 10                                                   | CTE_INT    | 10                                                 | -          |
 | 4                                                    | CTE_INT    | 4                                                  | -          |
 | 3                                                    | CTE_INT    | 3                                                  | -          |
 | _"a es mas grande que b"                             | CTE_STRING | "a es mas grande que b"                            | 23         |
 | _"a es mas grande que b (a > b)"                     | CTE_STRING | "a es mas grande que b (a > b)"                    | 31         |
 | _"a es mas chico o igual a b (a <= b)"               | CTE_STRING | "a es mas chico o igual a b (a <= b)"              | 37         |
 | _"a y c mas grandes que b [a > b & c > b]"           | CTE_STRING | "a y c mas grandes que b [a > b & c > b]"          | 41         |
-| 0                                                    | CTE_INT    | 0                                                  | -          |
 | _"a es mas grande que b o c es mas grande que b"     | CTE_STRING | "a es mas grande que b o c es mas grande que b"    | 47         |
 | _"a no es mas grande que b -> !(a > b)"              | CTE_STRING | "a no es mas grande que b -> !(a > b)"             | 38         |
 | 5                                                    | CTE_INT    | 5                                                  | -          |
 | _"b ahora vale 1"                                    | CTE_STRING | "b ahora vale 1"                                   | 16         |
-| 1                                                    | CTE_INT    | 1                                                  | -          |
-| 10                                                   | CTE_INT    | 10                                                 | -          |
 | _"a es mas grande que b y c"                         | CTE_STRING | "a es mas grande que b y c"                        | 27         |
 | 99999_990000000                                      | CTE_REAL   | 99999.990000000                                    | -          |
 | 99_000000000                                         | CTE_REAL   | 99.000000000                                       | -          |
